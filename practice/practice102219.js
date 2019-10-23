@@ -11,7 +11,7 @@ var fs = require("fs");
 
 fs.writeFileSync("repeat.txt", "this is the song that never ends. Yes, it goes on and on, my friend. Someone started singing it not knowing what it was and they kept on singing it just because ", "utf8");
 
-for (var i = 0; i < 100; i++) {
+for (var i = 0; i < 99; i++) {
     fs.appendFileSync("repeat.txt", "this is the song that never ends. Yes, it goes on and on, my friend. Someone started singing it not knowing what it was and they kept on singing it just because " , "utf8");
 }
 

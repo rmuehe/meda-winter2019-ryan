@@ -8,113 +8,150 @@ console.log(randomNumber);
 
 //////////////////////
 
-function partition(originalNum) {
+var array = 
+    [
+        [
+          1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1,
+          1, 1
+        ],
+        [
+          2, 1, 1, 1, 1,
+          1, 1, 1, 1, 1,
+          1
+        ],
+        [
+          2, 2, 1, 1, 1,
+          1, 1, 1, 1, 1
+        ],
+        [
+          2, 2, 2, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          2, 2, 2, 2,
+          1, 1, 1, 1
+        ],
+        [
+          2, 2, 2, 2,
+          2, 1, 1
+        ],
+        [ 2, 2, 2, 2, 2, 2 ],
+        [
+          3, 1, 1, 1, 1,
+          1, 1, 1, 1, 1
+        ],
+        [
+          3, 2, 1, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          3, 2, 2, 1,
+          1, 1, 1, 1
+        ],
+        [
+          3, 2, 2, 2,
+          1, 1, 1
+        ],
+        [ 3, 2, 2, 2, 2, 1 ],
+        [
+          3, 3, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          3, 3, 2, 1,
+          1, 1, 1
+        ],
+        [ 3, 3, 2, 2, 1, 1 ],
+        [ 3, 3, 2, 2, 2 ],
+        [ 3, 3, 3, 1, 1, 1 ],
+        [ 3, 3, 3, 2, 1 ],
+        [ 3, 3, 3, 3 ],
+        [
+          4, 1, 1, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          4, 2, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          4, 2, 2, 1,
+          1, 1, 1
+        ],
+        [ 4, 2, 2, 2, 1, 1 ],
+        [ 4, 2, 2, 2, 2 ],
+        [
+          4, 3, 1, 1,
+          1, 1, 1
+        ],
+        [ 4, 3, 2, 1, 1, 1 ],
+        [ 4, 3, 2, 2, 1 ],
+        [ 4, 3, 3, 1, 1 ],
+        [ 4, 3, 3, 2 ],
+        [ 4, 4, 1, 1, 1, 1 ],
+        [ 4, 4, 2, 1, 1 ],
+        [ 4, 4, 2, 2 ],
+        [ 4, 4, 3, 1 ],
+        [ 4, 4, 4 ],
+        [
+          5, 1, 1, 1,
+          1, 1, 1, 1
+        ],
+        [
+          5, 2, 1, 1,
+          1, 1, 1
+        ],
+        [ 5, 2, 2, 1, 1, 1 ],
+        [ 5, 2, 2, 2, 1 ],
+        [ 5, 3, 1, 1, 1, 1 ],
+        [ 5, 3, 2, 1, 1 ],
+        [ 5, 3, 2, 2 ],
+        [ 5, 3, 3, 1 ],
+        [ 5, 4, 1, 1, 1 ],
+        [ 5, 4, 2, 1 ],
+        [ 5, 4, 3 ],
+        [ 5, 5, 1, 1 ],
+        [ 5, 5, 2 ],
+        [
+          6, 1, 1, 1,
+          1, 1, 1
+        ],
+        [ 6, 2, 1, 1, 1, 1 ],
+        [ 6, 2, 2, 1, 1 ],
+        [ 6, 2, 2, 2 ],
+        [ 6, 3, 1, 1, 1 ],
+        [ 6, 3, 2, 1 ],
+        [ 6, 3, 3 ],
+        [ 6, 4, 1, 1 ],
+        [ 6, 4, 2 ],
+        [ 6, 5, 1 ],
+        [ 6, 6 ],
+        [ 7, 1, 1, 1, 1, 1 ],
+        [ 7, 2, 1, 1, 1 ],
+        [ 7, 2, 2, 1 ],
+        [ 7, 3, 1, 1 ],
+        [ 7, 3, 2 ],
+        [ 7, 4, 1 ],
+        [ 7, 5 ],
+        [ 8, 1, 1, 1, 1 ],
+        [ 8, 2, 1, 1 ],
+        [ 8, 2, 2 ],
+        [ 8, 3, 1 ],
+        [ 8, 4 ],
+        [ 9, 1, 1, 1 ],
+        [ 9, 2, 1 ],
+        [ 9, 3 ],
+        [ 10, 1, 1 ],
+        [ 10, 2 ],
+        [ 11, 1 ],
+        [ 12 ]
+      ];
 
 
-    // function partition (originalNum) {
-      var array = [[]]; 
-      for (var x = 0; x < originalNum; x++) {
-        array[0].push(1);
-      }
-      
-    function plusOne (arr) {
-      let last = arr[arr.length-1].slice();
-      // if they are all the same, then plusOne the 1st
-      let counter = 0;
-      last.forEach(function (item, index, arr) {    
-        if (arr[index] === arr[index-1]) {
-          counter++;
-        } 
-      });
-      if (counter === last.length-1) {
-        let spliced = last.splice(0, 1);
-        spliced++;
-        last.unshift(spliced);
-        last.splice(1, last.length-1);
-        let reduced = last.reduce(function (total, item) {
-          return total+ item;
-        });
-        for (var j = 0; j < originalNum - reduced; j++) {
-          last.push(1);
-        } 
-        return last;
-      }
-      for (var i = last.length -1; i >= 0; i--) {
-        if (last[i] < last[i-1]) {
-          last[i]++;      
-          last.splice(i+1, last.length-1);
-          let reduced = last.reduce(function (total, item) {
-            return total+ item;
-          });    
-          if (reduced > originalNum) {
-            last.pop();
-            for (var l = last.length -1; l >= 0; l--) {
-              if (last[l] < last[l-1]) {
-                last[l]++;
-                last.splice(l+1, last.length-1);
-                let reduced = last.reduce(function (total, item) {
-                  return total+ item;
-                });
-                for (var m = 0; m < originalNum - reduced; m++) {
-                  last.push(1);
-                }
-                return last;
-              }
-            }
-            last[0]++;
-            last.splice(1, last.length-1);
-            let reduced = last.reduce(function (total, item) {
-              return total+ item;
-            });
-            for (var n = 0; n < originalNum - reduced; n++) {
-              last.push(1);
-            }
-            return last;
-          }
-          for (var k = 0; k < originalNum - reduced; k++) {
-            last.push(1);
-          } 
-          return last;
-        }
-      }  
-    }
-    
-    while (array[array.length-1][0] !== originalNum) {  
-      array.push(plusOne(array));
-      while (array[array.length-1][0] !== originalNum && array.length % 9000 !== 0) {
-        array.push(plusOne(array));
-      }
-    }  
-    
-    array = _.flattenDepth(array, 1);
-    console.log(array);
-    // console.log(array.length);  
-    // return array.length;   
-    // var partitionCount = 0;
-    
-    //   while (array[array.length-1][0] !== originalNum) {
-    //     array.push(plusOne(array));
-    //     array.shift();
-    //     partitionCount++;
-    
-    //     while (array[array.length-1][0] !== originalNum && array.length % 2000 !== 0) {
-    //       array.push(plusOne(array));
-    //       array.shift();
-    //       partitionCount++;
-    //     }
-    //   }  
-      
-    // //console.log(partitionCount);
-    // return partitionCount;  
-    
-    }
-    
-
-    partition(12);
-
-    // _.flattenDepth(array, 1);
-
-    // console.log(array);
+array = _.flattenDepth(array, 1);
+console.log(array);
+  
 
     
     
