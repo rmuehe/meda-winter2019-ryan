@@ -21,17 +21,13 @@ ${ast}`;
   loop(num);
   
   arr.reverse().shift();
-  arr.forEach(function (x) { 
-    if (arr.indexOf(x) !== arr.length -1) {       
-      ast = x;
-      return str = str + `
-${ast}`;
-    } else {  
-      ast = x;
-      return str = str + `
-${ast}
-`;
-    }
+  arr.forEach(function(x) { 
+     return arr.indexOf(x) !== arr.length -1 ?       
+     str = str + `
+${x}`
+     : str = str + `
+${x}
+`; 
   });  
   return str;
 }

@@ -1,5 +1,6 @@
 var fs = require("fs");
 var terminalText = process.argv;
+
 var color = "";
 
 if (terminalText[3] == "black") {
@@ -16,7 +17,6 @@ if (terminalText[3] == undefined) {
 }
 
 
-
 var ptag = terminalText[4];
 
 var htmlTitle = "Sordid Sorted";
@@ -26,7 +26,7 @@ body {
     font-size: 200%;
     color: ${color};
 }`;
-var htmlBody = "";
+var htmlBody = "ytfuyro";
 var htmlFileName = terminalText[2];
 var html;
 
@@ -47,7 +47,7 @@ html = `
 
     <body>
         ${htmlBody}
-        <p>${ptag}</p>        
+        <p>${process.argv[4]}</p>        
     </body>
 </html>`;
 

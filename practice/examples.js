@@ -28,7 +28,7 @@ var html3 = `
 // write the html in IDE then copy to string literal space
 
 var fs = require("fs");
- fs.writeFileSync("sample.html", html3, "utf8");
+fs.writeFileSync("sample.html", html3, "utf8");
 
 // var text = fs.readFileSync("sample.html", "utf8");
 
