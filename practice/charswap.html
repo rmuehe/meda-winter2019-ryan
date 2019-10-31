@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Product List</title>
+</head>
+<body style="background-color:darkslategray; color: powderblue;">
+<script>
+    
+// 2) Make a JavaScript (not HTML) list of products to sell.
+
+let array = ["earrings", "cap", "necklace", "bracelet", "charms", "stud", "cuff", "hat"];
+let tempLit = ``;
+// 3) Figure out how to display your list on the page.
+
+tempLit = `
+<h1>List of Products to Sell</h1>
+<ol>`;
+for (var h = 0; h < array.length; h++) {
+  tempLit = tempLit + `
+      <li>${array[h]}</li>`;
+}
+tempLit = tempLit + `</ol>`    
+
+// 4) Write a function that will display a random item from your list on the page.
+function randomItemGet (arr) {
+  let random = Math.random();
+  let num = Math.floor(random * arr.length);
+  return arr[num];
+}
+let randomItem = randomItemGet(array);
+tempLit = tempLit + `
+<h2>A Random Item From the List:</h2>
+      <ul><li>${randomItem}</li></ul>`;
+
+// 5) Display the last item from your list on the page.
+tempLit = tempLit + `
+
+<h2>The Last Item From the List:</h2>
+      <ul><li>${array[array.length-1]}</ul></li>`;
+
+// 6) Display all the list items longer than three letters.
+tempLit = tempLit + `
+
+<h2>Items Longer Than Three Letters:</h2>
+<ol>`;
+for (var k = 0; k < array.length; k++) {
+  if (array[k].length > 3) {
+    tempLit = tempLit + `
+    <li>${array[k]}</li>`;
+  }
+}
+tempLit = tempLit + `</ol>`;    
+
+// 7) Check your indentation so your code is easy to read!
+
+// CHALLENGE
+// Given a string, return a new string 
+// where the second and last characters are exchanged. 
+
+function swapChars(string) {
+  let secondLetter = string[1];
+  let lastLetter = string[string.length-1];
+  string[1] = lastLetter;
+  let stringArr = string.split('');
+  stringArr[1] = lastLetter;
+  stringArr[stringArr.length-1] = secondLetter;
+  let newStr = stringArr.join("");
+  tempLit = tempLit + `
+<p>The word '${string}' below swaps the 2nd for the last letter:</p>`;
+  return newStr;
+}
+
+tempLit = tempLit + `
+
+<h2>Challenge Result:</h2>
+<ul>`;
+let swapped = swapChars("earrings");
+tempLit = tempLit + `
+      <li>${swapped}</li></ul>
+`;
+    document.write(tempLit);
+  </script>
+</body>
+</html>
