@@ -36,6 +36,31 @@ class Mammal extends Animal {
         console.log("A new " + this.type + " was born.");
     }
 
+    getType() {return this.type;}
+    setType(type) {this.type = type;}
+    getLimbs() {return this.limbs;}
+    setLimbs(limbs) {this.limbs = limbs;} 
+    getMouth() {return this.mouth;}
+    setMouth(mouth) {this.mouth = mouth;}
+    getNose() {return this.nose;}
+    setNose(nose) {this.nose = nose;}
+    getEyes() {return this.eyes;}
+    setEyes(eyes) {this.eyes = eyes;}
+    getMammary() {return this.mammary;}
+    setMammary(mammary) {this.mammary = mammary;}
+    getLifeExpectancy() {return this.lifeExpectancy;}
+    setLifeExpectancy(lifeExpectancy) {this.lifeExpectancy = lifeExpectancy;}
+    getHair() {return this.hair;}
+    setHair(hair) {this.hair = hair;}
+    getHeightInches() {return this.heightInches;}
+    setHeightInches(heightInches) {this.heightInches = heightInches;}
+    getWightLbs() {return this.weightLbs;}
+    setWeightLbs(weightLbs) {this.weightLbs = weightLbs;}
+    getTail() {return this.tail;}
+    setTail(tail) {this.tail = tail;}
+    getAge() {return this.age;}
+    setAge(age) {this.age = age;}
+
     eat() {
         console.log(this.type + " eats food.");
     }
@@ -88,3 +113,4 @@ const tilapia = new Fish(true);
 
 console.log(Object.getOwnPropertyNames(fourthCatMammal));
 console.log(Object.keys(fourthCatMammal));
+
