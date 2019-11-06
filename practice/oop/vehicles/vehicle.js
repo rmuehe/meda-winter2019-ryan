@@ -10,6 +10,10 @@ const Vehicle = class Vehicle {
 
         console.log("NEW VEHICLE WAS CREATED.")
     }
+
+    speak() {
+        console.log(`This is a vehicle object`);
+    }
     
 }
 

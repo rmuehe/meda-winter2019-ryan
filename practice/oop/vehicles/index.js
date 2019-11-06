@@ -1,22 +1,53 @@
+// npm install -S lodash
+// - lodash is a library for a node project
+
+const _ = require("lodash");
 const Car = require("./car.js");
-const Truck = require("./truck.js");
+const Helicopter = require("./helicopter.js");
+const fs = require("fs");
 
-let my1stCar = new Car(120, "gas", "Civic", 2000, "black", "Honda", "Enterprise", "8EFD39E9", 125000, 12, 35);
+let random = (min, max) => Math.ceil(min + (Math.random() * (max - min)));
 
-console.log(my1stCar);
+console.log(random);
+// let my1stCar = new Car(120, "gas", "Civic", 2000, "black", "Honda", "Enterprise", "8EFD39E9", 125000, 12, 35);
+// let randomCar = new Car("User", "Generic", "Company", random(1930, 2020), "transparent", random(1111111, 9999999), random(0, 300000), random(0, 40), random(1, 40), "gas", random(28, 240));
 
-let my2ndCar = new Car (null, null, "model", null, null, "make", null, null, "mileage", null, "MPG");
-console.log(my2ndCar);
+// let randomCar = new Car(random(28, 240),"gas", "Generic", random(1930, 2020), "transparent", "Company", random(0, 300000), random(11111111, 99999999), random(0, 40), random(1, 40), random(1, 40));
 
-my1stCar.travel(100);
-// my1stCar.travel(100);
-// my1stCar.travel(100);
-// my1stCar.travel(100);
-// my1stCar.travel(100);
+// console.log(randomCar);
 
-my1stCar.refuel(2.85);
+// randomCar = JSON.stringify(randomCar);
 
-let volvo = new Truck(100, null, "VNL 860", 2005, "black", "Volvo", "self", "GETRDUN", 100000, 40, 10);
-console.log(volvo);
+// fs.writeFileSync("carinventory.txt", randomCar, "utf8");
 
-volvo.transport(9000);
+function createCar(make) {
+    let randomCar = new Car(random(28, 240),"gas", make, random(1930, 2020), "transparent", "Company",  "User", random(11111111, 99999999), random(0, 300000), random(4, 40), random(10, 40));
+    return randomCar;
+}
+
+let container = {
+    cars: []
+    // lastAccess:
+    // totalCars:
+};
+
+for (let i = 0; i < 100; i++) {
+    container.cars.push(createCar("Elision" + (i+1)));
+}
+
+// container.cars.push(randomCar);
+
+let stringifiedData = JSON.stringify(container);
+
+// for (var i = 0; i < 20; i++) {
+//     randomCar[i] = JSON.stringify(randomCar);
+//     fs.writeFileSync("carinventory.txt", randomCar, "utf8");
+// }
+
+fs.writeFileSync("carinventory.txt", stringifiedData, "utf8");
+
+let randomCarObj = fs.readFileSync("carinventory.txt", "utf8");
+randomCarObj = JSON.parse(randomCarObj);
+
+
+console.log(randomCarObj);

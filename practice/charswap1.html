@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   $(document).ready(function(){
     $('#MyButton').click(function(){
        CapacityChart();
@@ -6,7 +6,7 @@
   });
 </script>
 
-<input type="button" value="Capacity Chart" id="MyButton" >
+<input type="button" value="Capacity Chart" id="MyButton" > -->
 
 <!DOCTYPE html>
 <html>
@@ -90,7 +90,16 @@ let swapped = swapChars("earrings");
 tempLit = tempLit + `
       <li>${swapped}</li></ul>
 `;
+
+$(document).ready(function(){
+    $('#MyButton').click(function(){
+       CapacityChart();
+    });
+  });
+
     document.write(tempLit);
   </script>
+
+<input type="button" value="Capacity Chart" id="MyButton" >
 </body>
 </html>

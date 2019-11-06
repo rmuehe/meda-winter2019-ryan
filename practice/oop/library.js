@@ -13,7 +13,11 @@ function shouldntBeAccessed() {
 }
 
 // For other files to access this mathify function
+// newFuncName: nameInLibrary
+// key: value
+// if the key == value, then the key is enough.
 module.exports = {
-    mathify
+    mathify: mathify
 };
+
 

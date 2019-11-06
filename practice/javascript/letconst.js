@@ -14,7 +14,6 @@ function doIt () {
 
 doIt();
 
-    // var two =  1000;
-
+// var two =  1000;
 
 console.log(two);

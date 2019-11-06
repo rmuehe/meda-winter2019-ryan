@@ -44,3 +44,4 @@ var jsonText = JSON.stringify(obj);
 // console.log("File written");
 
 console.log(fs.readFileSync("example.Json", "utf8"));
+

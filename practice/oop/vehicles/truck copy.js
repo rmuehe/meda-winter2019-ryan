@@ -1,7 +1,8 @@
-const Vehicle = require("./vehicle.js");
+
+const Vehicle = require("../practice/oop/vehicles/vehicle.js");
 
 const Truck = class Truck extends Vehicle {
-    constructor(topSpeed, engineType, model, year, color, make, owner, license, mileage, tankSize, MPG) {
+    constructor(topSpeed, engineType, model, year, color, make, owner, license, mileage, tankSize, MPG, capacityTons) {
         super(topSpeed, engineType, model, year, color, make, owner);
         this.engineType = "diesel";
         this.license = license;
@@ -9,7 +10,8 @@ const Truck = class Truck extends Vehicle {
         this.tankSize = tankSize;
         this.currentFuel = this.tankSize;
         this.MPG = MPG;
-        this.capacityTons = 10000;
+        this.capacityTons = capacityTons;
+        this.currentLoadTons = 0;
     }
 
     travel (miles) {
@@ -39,21 +41,44 @@ The total fuel is now ${this.currentFuel.toFixed(2)}`);
     }
 
     transport (tons) {
-        if (tons < 0) {
+        if (tons <= 0) {
             console.log("Input a positive number of tons");
             return 3;
         }
 
         if (this.capacityTons - tons < 0) {
-            console.log(`${tons} tons is more than the capacity of the ${this.model}.
-The capacity is ${this.capacityTons}
+            console.log(`${tons} tons is more than ${this.model} can hold.
+The max capacity is ${this.capacityTons}
+The current capacity is ${this.currentLoadTons}
 Lower the weight and try again`);
         } else {
-            this.capacityTons -= tons;
+            this.currentLoadTons += tons;
             console.log(`${tons} tons added to the ${this.make}
-There is ${this.capacityTons} left over`);
+You can add ${this.capacityTons - this.currentLoadTons} more tons`);
+        }
+    }
+
+    unload (tons) {
+        if (tons <= 0) {
+            console.log("Input a positive number of tons");
+            return 4;
+        }
+
+        if (tons > this.currentLoadTons) {
+            console.log("You cannot remove more tonnage than you have.");
+            console.log(`At most you can remove ${this.currentLoadTons} tons from the ${this.model}`);
+            return 5;
+        } else {
+            this.currentLoadTons -= tons;
+            console.log(`Unloaded ${tons} from the ${this.model}
+There's now room for ${this.capacityTons - this.currentLoadTons} more tons`);
         }
     }
 }
 
 module.exports = Truck;
+
+let volvo = new Truck(100, null, "VNL 860", 2005, "black", "Volvo", "self", "GETRDUN", 100000, 40, 10, 10000);
+console.log(volvo);
+
+volvo.transport(9000);

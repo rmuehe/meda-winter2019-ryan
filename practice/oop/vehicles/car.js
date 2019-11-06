@@ -14,9 +14,11 @@ const Car = class Car extends Vehicle {
         if (this.currentFuel - (miles / this.MPG) <= 0) {
             console.log(`The ${this.model} can't make that trip. 
 At most, it can travel ${(this.currentFuel * this.MPG).toFixed(2)} miles.`)
+            return 3;
         } else {
             this.currentFuel = this.currentFuel - (miles / this.MPG);
             console.log(`The ${this.model} has ${this.currentFuel.toFixed(2)} gallons of ${this.engineType} left`);
+            return 0;
         }
     }
 
@@ -25,6 +27,7 @@ At most, it can travel ${(this.currentFuel * this.MPG).toFixed(2)} miles.`)
             this.currentFuel += num;
             console.log(`Added ${num} gallons of ${this.engineType} to the ${this.model}
 The total fuel is now ${this.currentFuel.toFixed(2)}`);
+            return 0;
         } else {
             if (num <= 0) {
                 console.log("Need a positive number.");
@@ -34,6 +37,11 @@ The total fuel is now ${this.currentFuel.toFixed(2)}`);
             console.log(`At most you can add ${(this.tankSize - this.currentFuel).toFixed(2) - 0.01} gallons of ${this.engineType}`);
             return 2;
         }
+    }
+
+    // overloading
+    speak() {
+        console.log(`This is a car object`);
     }
 }
 

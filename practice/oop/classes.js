@@ -115,8 +115,8 @@ class Employee {
     }
 }
 
-let firstEmployee = new Employee("Eduardo", "Garcia", "29", "San Francisco", "California", "", "", "", "", "", "", "", "", 10);
-let secondEmployee = new Employee("Pedro", "Alvarez", "30", "Atlanta", "Georgia", "", "", "", "", "", "", "", "", 4);
+let firstEmployee = new Employee("Eduardo", "Garcia", "29", "San Francisco", "California", null, null, null, null, null, null, null, null, 10);
+let secondEmployee = new Employee("Pedro", "Alvarez", "30", "Atlanta", "Georgia", null, null, null, null, null, null, null, null, 4);
 
 let employeeArray = [firstEmployee, secondEmployee];
 let employeeAvgAge = getAverageAge(employeeArray);
