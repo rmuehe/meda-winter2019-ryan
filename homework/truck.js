@@ -1,3 +1,4 @@
+
 const Vehicle = require("../practice/oop/vehicles/vehicle.js");
 
 const Truck = class Truck extends Vehicle {
@@ -47,13 +48,13 @@ The total fuel is now ${this.currentFuel.toFixed(2)}`);
 
         if (this.capacityTons - tons < 0) {
             console.log(`${tons} tons is more than ${this.model} can hold.
-The capacity is ${this.capacityTons}
+The max capacity is ${this.capacityTons}
 The current capacity is ${this.currentLoadTons}
 Lower the weight and try again`);
         } else {
             this.currentLoadTons += tons;
             console.log(`${tons} tons added to the ${this.make}
-There is ${this.capacityTons - this.currentLoadTons} left over`);
+You can add ${this.capacityTons - this.currentLoadTons} more tons`);
         }
     }
 
@@ -67,14 +68,11 @@ There is ${this.capacityTons - this.currentLoadTons} left over`);
             console.log("You cannot remove more tonnage than you have.");
             console.log(`At most you can remove ${this.currentLoadTons} tons from the ${this.model}`);
             return 5;
+        } else {
+            this.currentLoadTons -= tons;
+            console.log(`Unloaded ${tons} from the ${this.model}
+There's now room for ${this.capacityTons - this.currentLoadTons} more tons`);
         }
-
-        if (tons < this.currentLoadTons) {
-            
-        }
-
-
-
     }
 }
 
