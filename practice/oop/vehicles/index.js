@@ -44,10 +44,29 @@ let stringifiedData = JSON.stringify(container);
 //     fs.writeFileSync("carinventory.txt", randomCar, "utf8");
 // }
 
-fs.writeFileSync("carinventory.txt", stringifiedData, "utf8");
+fs.writeFileSync("carinventory.json", stringifiedData, "utf8");
 
-let randomCarObj = fs.readFileSync("carinventory.txt", "utf8");
+let randomCarObj = fs.readFileSync("carinventory.json", "utf8");
 randomCarObj = JSON.parse(randomCarObj);
 
 
 console.log(randomCarObj);
+
+let dataCount = 0;
+let someCars = randomCarObj.cars;
+// console.log(someCars.year);
+
+for (var j = 0; j < someCars.length; j++) {
+    if (someCars[j].year <= 1960 && someCars[j].year >= 1940) {
+        dataCount++;
+    }
+}
+
+
+// randomCarObj.cars.year.forEach(function (item) {
+//     if (item <= 1960 && item >= 1940) {
+//         dataCount++;
+//     }
+// }) 
+
+console.log(dataCount);
