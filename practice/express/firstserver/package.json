@@ -1,0 +1,14 @@
+{
+  "name": "firstserver",
+  "version": "0.0.1",
+  "description": "A basic Express server on which to practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "-.-",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
