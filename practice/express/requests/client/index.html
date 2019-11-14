@@ -25,35 +25,44 @@
     </style>
 </head>
 <body>
-    <h1>Comment Submission Form</h1>
-    <h2>Instructions</h2>
-    <ol>
-        <li>Fill in the Form</li>
-        <li>Press the Submit Button</li>
-    </ol>
+    <div id="comments-section">
+        <h1>Comments Section</h1>
+        <ul id="comments">
 
-    <form action = "#"> <!-- form action is a get request-->
-        <!-- form action= "http://localhost:3000/getSomeFile"-->
-        <label for="fname">First Name</label> <br>
-        <input name="fname" id="fname" type="text"> <br>
+        </ul>
+    </div>
 
-        <label for="lname">Last Name</label> <br>
-        <input name="lname" id="lname" type="text"> <br>
+    <div id="comment-submission"> </div>
+        <h1>Comment Submission Form</h1>
+        <h2>Instructions</h2>
+        <ol>
+            <li>Fill in the Form</li>
+            <li>Press the Submit Button</li>
+        </ol>
 
-        <label for="email">Email</label> <br>
-        <input name="email" id="email" type="email"> <br>
+        <form action = "#"> <!-- form action is a get request-->
+            <!-- form action= "http://localhost:3000/getSomeFile"-->
+            <label for="fname">First Name</label> <br>
+            <input name="fname" id="fname" type="text"> <br>
 
-        <label for="age">Age</label> <br>
-        <input name="age" id="age" type="number"> <br>
+            <label for="lname">Last Name</label> <br>
+            <input name="lname" id="lname" type="text"> <br>
 
-        <label for="comment">Comments</label> <br>
-        <textarea cols="80" rows="20" id="comment" type="text">
-        </textarea> <br>
-        <input type= "reset" value="Reset">
-        
-    </form>
-        <button id="submit">Submit</button> <!--Must be outside the form as a "dumb" version, so can use with jQuery-->
-    
+            <label for="email">Email</label> <!-- eBook --> <br>
+            <input name="email" id="email" type="email"> <br>
+
+            <label for="age">Age</label> <br>
+            <input name="age" id="age" type="number"> <br>
+
+            <label for="comment">Comments</label> <br>
+            <textarea cols="80" rows="20" id="comment" type="text">
+            </textarea> <br>
+            <input type= "reset" value="Reset">
+            
+        </form>
+            <button id="submit">Submit</button> <!--Must be outside the form as a "dumb" version, so can use with jQuery-->
+    </div>
+
     <script>
             // class YAHH {
             //     constructor (yah) {
@@ -71,7 +80,8 @@
                 // This listens to the submit button and the user clicks it to confirm 
                 // that they are done and the data is sent to the server
 
-        
+                // TO DO : Add timestamp using:
+                // new Date.prototype.toLocaleDateString();
 
                 // class YAHH {
                 //     constructor (yah, firstName, lastName, email, age) {
@@ -103,9 +113,28 @@
 
                 // Sends a POST request to the URL described
                 // takes three arguments: URL, data, callback func
-                $.post("http://localhost:8080/updateData", data, (dataFromServer) => {
+                $.post("http://localhost:8080/submitComment", data, () => {
                     // console.log("The server has responded");
-                    console.log(dataFromServer);
+                    console.log("The server has responded.");
+
+                    $.post("http://localhost:8080/loadComments", {}, 
+                    (commentsReceived) => {
+                        console.log(commentsReceived);
+                        //console.log(commentsReceived.commentsArray[1].comment);
+
+                        // TO DO:
+                        // load the comments at the start of the website loading
+                        let commentString = commentsReceived.commentsArray[0].comment + " - " + commentsReceived.commentsArray[0].firstName;
+
+                        let cArray = commentsReceived.commentsArray;
+
+                        for (let i = 0; i < cArray.length; i++) {
+                            let commentString = "<li>" + cArray[0].message + " - " + cArray[0].firstName + "</li>";
+                            $("#comments").append(commentString);
+
+                        }
+                        // $("#comments").append(commentString);
+                    });
                 });
             });
 

@@ -42,6 +42,9 @@ app.use("/client", express.static("./webfiles/"));
 
 app.use("/myproject", express.static("../../../../meda-winter2019-eduardo/projects/htmlGenerator"));
 
+// needs to specify a new folder name in the 1st use argument
+// the express.static argument needs a filepath that ends in a folder
+// that includes an index.html
 
 
 
