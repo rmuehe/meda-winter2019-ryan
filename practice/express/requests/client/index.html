@@ -40,7 +40,8 @@
             <li>Press the Submit Button</li>
         </ol>
 
-        <form action = "#"> <!-- form action is a get request-->
+        <form id="commentSubmission">
+        <!-- <form action = "#">  form action is a get request-->
             <!-- form action= "http://localhost:3000/getSomeFile"-->
             <label for="fname">First Name</label> <br>
             <input name="fname" id="fname" type="text"> <br>
@@ -57,53 +58,43 @@
             <label for="comment">Comments</label> <br>
             <textarea cols="80" rows="20" id="comment" type="text">
             </textarea> <br>
-            <input type= "reset" value="Reset">
             
         </form>
+            <input form="commentSubmission" type="reset" value="Reset" />
             <button id="submit">Submit</button> <!--Must be outside the form as a "dumb" version, so can use with jQuery-->
     </div>
 
     <script>
-            // class YAHH {
-            //     constructor (yah) {
-            //         this.yah = yah;
-            //     }
-            // }
-
-            // let data = new YAHH("hello there");
 
         $(document).ready(() => {
-            // console.log("Testing!");
+            
+            $.post("http://localhost:8080/loadComments", {}, (commentsReceived) => {                        
+                        //console.log(commentsReceived.commentsArray[1].comment);
+
+                        // TO DO:
+                        // load the comments at the start of the website loading
+                        $("#comments").empty();
+
+                        let cArray = commentsReceived.commentsArray;
+
+                        for (let i = 0; i < cArray.length; i++) {
+                            let commentString = "<li>" + cArray[i].comment + " - " + cArray[i].firstName + "</li>";
+                            $("#comments").append(commentString);
+                        }
+                        // $("#comments").append(commentString);
+                    });
 
             $("#submit").click(() => {
-                // console.log("I have been clicked")
+ 
                 // This listens to the submit button and the user clicks it to confirm 
                 // that they are done and the data is sent to the server
 
                 // TO DO : Add timestamp using:
                 // new Date.prototype.toLocaleDateString();
 
-                // class YAHH {
-                //     constructor (yah, firstName, lastName, email, age) {
-                //         this.yah = yah;
-                //         this.firstName = firstName;
-                //         this.lastName = lastName;
-                //         this.email = email;
-                //         this.age = age;
-                //     }
-                // }
-
-                // let data = new YAHH("hello there");
-                // let data = {
-                //     data.yah = $("#comment").val("YOU LOSE");
-                //     data.firstName = $("#fname").val("YOU LOSE");
-                //     data.lastName = $("#lname").val("YOU LOSE");
-                //     data.email = $("#email").val("YOU LOSE");
-                //     data.age = $("#age").val("YOU LOSE");
-                // };
 
                 let data = {
-                    message : " Ohi",
+                    message : "Ohi",
                     comment : $("#comment").val(),
                     firstName : $("#fname").val(),
                     lastName : $("#lname").val(),
@@ -117,41 +108,24 @@
                     // console.log("The server has responded");
                     console.log("The server has responded.");
 
-                    $.post("http://localhost:8080/loadComments", {}, 
-                    (commentsReceived) => {
-                        console.log(commentsReceived);
+                    $.post("http://localhost:8080/loadComments", {}, (commentsReceived) => {                        
                         //console.log(commentsReceived.commentsArray[1].comment);
 
                         // TO DO:
                         // load the comments at the start of the website loading
-                        let commentString = commentsReceived.commentsArray[0].comment + " - " + commentsReceived.commentsArray[0].firstName;
+                        $("#comments").empty();
 
                         let cArray = commentsReceived.commentsArray;
 
                         for (let i = 0; i < cArray.length; i++) {
-                            let commentString = "<li>" + cArray[0].message + " - " + cArray[0].firstName + "</li>";
+                            let commentString = "<li>" + cArray[i].comment + " - " + cArray[i].firstName + "</li>";
                             $("#comments").append(commentString);
-
                         }
                         // $("#comments").append(commentString);
                     });
                 });
             });
 
-            // class YAHH {
-            //     constructor (yah) {
-            //         this.yah = yah;
-            //     }
-            // }
-
-            // let data = new YAHH("hello there");
-
-            // // Sends a POST request to the URL described
-            // // takes three arguments: URL, data, callback func
-            // $.post("http://localhost:8080/updateData", data, (dataFromServer) => {
-            //     console.log("The server has responded");
-            //     console.log(dataFromServer);
-            // });
 
         });
     </script>
