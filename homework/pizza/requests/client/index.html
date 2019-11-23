@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WierDough</title>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background-color:lavenderblush;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- The comments section on the webpage. START -->
+    <div id="comments-section">
+        <h1>Pizza Log</h1>
+        <ul id="comments">
+
+        </ul>
+    </div>
+
+    <!-- The comments section on the webpage. END -->
+
+    <!-- THe comment submission section START -->
+
+    <div id="comment-submission">
+        <h1>Calculate Pizzas</h1>
+        <h2>Instructions</h2>
+        <ol>
+            <li>Fill in the form.</li>
+            <li>Press the Submit button.</li>
+        </ol>
+
+        <p>Pizza Log Format-- Meat Eaters : Veg Eaters = 201 sq.in (X-Lg), 147 (Lg), 113 (Med), 78 (Sm), 38 (Personal)</p>
+
+        <!-- Form for accepting comments. NEEDS SANITIZATION ON FRONT AND BACK -->
+        <form id="commentSubmission">
+            <!-- <label for="fname">First Name</label><br />
+            <input name="fname" id="fname" type="text" /><br />
+            <label for="lname">Last Name</label><br />
+            <input name="lname" id="lname" type="text" /><br /> -->
+            <label for="total">total number of pizza consumers</label> <!-- eBook --><br />
+            <input name="total" id="total" type="number" /><br />
+            <label for="vegetarians">number of vegetarians</label><br />
+            <input name="vegetarians" id="vegetarians" type="number" /><br />
+            <label for="comment">Your Comments</label><br />
+            <textarea cols="80" rows="20" id="comment"></textarea><br />
+        </form>
+
+        <input form="commentSubmission" type="reset" value="Reset" />
+        <button id="submit">Submit</button>
+    </div>
+
+    <!-- The comment submission section END -->
+    
+
+    <script>
+        // const pizza = require("./pizza1.js");
+
+        // All code that RUNS must be writtin in the document ready function.
+        $(document).ready(() => {
+
+            // Update the list of comments.
+            updateCommentsList();
+
+            // Attach a listener to the Submit button...
+            $("#submit").click(() => {
+                // The user presses on it to confirm they are done and would like to submit to the server.
+
+                // Add timestamp in the future by using:
+                // Date.prototype.toLocaleDateString();
+                
+                // Build the object that we will send to the back end. Agree with the backend on how this object must be formatted.
+                let data = {
+                    // message: $("#comment").val(),
+                    // firstName: $("#fname").val(),
+                    // lastName: $("#lname").val(),
+                    // email: $("#email").val(),
+                    // age: $("#age").val(),
+ 
+                    total: $("#total").val(),
+                    vegetarians: $("#vegetarians").val(),
+                    message: $("#comment").val(),
+    
+
+                };
+
+                let pizzaOut = pizza(data.total, data.vegetarians);
+                // const pizzaArr = [38, 78, 113, 147, 201];  // this is reversed
+                // let sizeArr = [x-large, large, medium, small, personal];
+                
+                // TO DO: Convert numbers to sizes
+                /*
+                pizzaOut.meat = pizzaOut.meat.map((item) => {
+                    return item === 201 ? "x-large" : 
+                    item === 147 ? "large" :
+                    item === 113 ? "medium" :
+                    item === 78 ? "small" :
+                    item === 38 ? "personal" : null;  
+                });
+                */
+                // log(pizzaOut.meat);
+                 //log(pizzaOut.veg);
+
+
+                data.meat = pizzaOut.meat.toString();
+                data.veg = pizzaOut.veg.toString();
+
+                // console.log(data);
+            
+                // Sends a post request to the URL described. Arguments in order: URL, data, Callback Function.
+                $.post("http://localhost:3000/submitComment", data, () => {
+
+                    // Update the list of comments.
+                    updateCommentsList();
+                });
+
+            });
+        
+        });
+
+        // Defining the function that will update our list of comments.
+        function updateCommentsList() {
+
+            // Send a request to get ALL comments. We use post but we send an empty object.
+            $.post("http://localhost:3000/loadComments", {}, (commentsReceived) => {
+                //console.log(commentsReceived.commentsArray[1].firstName);
+
+                // Clear out any existing comments from the comments list.
+                $("#comments").empty();
+
+                // Create a variable that "renames" the comments array.
+                let cArray = commentsReceived.commentsArray;
+                log(cArray);
+
+                // Loop through each object inside of the comments array (cArray).
+                for (let i = 0; i < cArray.length; i++) {
+                    // For each object, build a string that looks like an HTML li element.
+                    //let commentString = "<li>" + cArray[i].message + " - " + cArray[i].firstName + "</li>";
+                    log(cArray[i].meat, cArray[i].veg);
+                    let commentString = `<li>${cArray[i].total - cArray[i].vegetarians} : ${cArray[i].vegetarians} = ${cArray[i].meat} meat: ${cArray[i].veg} veg </li>`;
+
+                    // Add it to the HTML ul element that has the comments id.
+                    $("#comments").append(commentString);
+                }
+
+            });
+        }
+
+            // Build a minimal pizza program.
+    // Inputs:
+    // Number of people, how many vegetarians
+    // Outputs:
+    // Number of pizzas with topping suggestions.
+
+    const log = console.log;
+    // size of pizzas in sq inches [personal, small, medium, large, x-large]
+    const pizzaArr = [38, 78, 113, 147, 201];
+    pizzaArr.reverse();
+
+    function pizza (pplNum, vegNum) {
+        // the total amount of sq. in to satisfy the avg US pizza consumer
+        let total = pplNum * 45.57;
+        let vegTotal = vegNum * 45.57;
+        let pizzaObj = { 
+            "meat" : [],
+            "veg" : []
+        };
+            
+        if (vegNum === 0 || vegNum === undefined) {
+            // pizzaNum = total - pizzaArr[i];
+            let i = 0;
+            while (total >= -10 || total >= 10) {
+                if (total - pizzaArr[i] >= -10 || total - pizzaArr[i] >= 10) {
+                pizzaObj.meat.push(pizzaArr[i]);
+                total -= pizzaArr[i];
+                } else {
+                    i++;
+                }
+                if (i >= pizzaArr.length) {
+                    break;
+                }
+            }   
+        } else {
+            let i = 0;
+            while (vegTotal >= -10 || vegTotal >= 10) {
+                if (vegTotal - pizzaArr[i] >= -10 || vegTotal - pizzaArr[i] >= 10) {
+                pizzaObj.veg.push(pizzaArr[i]);
+                vegTotal -= pizzaArr[i];
+                } else {
+                    i++;
+                }
+                if (i >= pizzaArr.length) {
+                    break;
+                }
+            }    
+
+            let meatTotal = total - vegTotal;
+            i = 0;
+            while (meatTotal >= -10 || meatTotal >= 10) {
+                if (meatTotal - pizzaArr[i] >= -10 || meatTotal - pizzaArr[i] >= 10) {
+                    pizzaObj.meat.push(pizzaArr[i]);            
+                    meatTotal -= pizzaArr[i];
+                } else {
+                    i++;
+                }
+                if (i >= pizzaArr.length) {
+                    break;
+                }
+            }
+        }
+        return pizzaObj;       
+    }
+    </script>
+</body>
+</html>
