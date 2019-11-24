@@ -62,10 +62,6 @@
     
 
     <script>
-        const log = console.log;
-        // size of pizzas in sq inches [personal, small, medium, large, x-large]
-        const pizzaArr = [38, 78, 113, 147, 201];
-        pizzaArr.reverse();
         // const pizza = require("./pizza1.js");
 
         // All code that RUNS must be writtin in the document ready function.
@@ -98,91 +94,24 @@
 
                 let pizzaOut = pizza(data.total, data.vegetarians);
                 // const pizzaArr = [38, 78, 113, 147, 201];  // this is reversed
-                let sizeArr = ["XL", "LG", "MED", "SM", "Personal"];
+                // let sizeArr = [x-large, large, medium, small, personal];
                 
                 // TO DO: Convert numbers to sizes
-                
-                pizzaOut.meat = pizzaOut.meat.map(item => {
-                    return item === 201 ? "XL" : 
-                    item === 147 ? "LG" :
-                    item === 113 ? "MED" :
-                    item === 78 ? "SM" :
-                    item === 38 ? "Personal" : null;  
+                /*
+                pizzaOut.meat = pizzaOut.meat.map((item) => {
+                    return item === 201 ? "x-large" : 
+                    item === 147 ? "large" :
+                    item === 113 ? "medium" :
+                    item === 78 ? "small" :
+                    item === 38 ? "personal" : null;  
                 });
-
-                pizzaOut.veg = pizzaOut.veg.map(item => {
-                    return item === 201 ? "XL" : 
-                    item === 147 ? "LG" :
-                    item === 113 ? "MED" :
-                    item === 78 ? "SM" :
-                    item === 38 ? "Personal" : null;  
-                });
-                
+                */
                 // log(pizzaOut.meat);
-                let meatCountArr = [0, 0, 0, 0, 0];
-                let meatArr = pizzaOut.meat;
-                // let meatArr = pizzaOut.meat.split(",");
-                sizeArr.forEach((item, index) => {
-                    meatArr.forEach(element => {
-                        if (element === item) meatCountArr[index]++; 
-                    });
-                });
-                // log(meatCountArr);
-
-                // let meatCountVarietyNum = meatCountArr.reduce((total, item) => {return (item > 0)? total++ : total + 0});
-                
-
-                let meatLastIndex = -1; 
-                meatCountArr.forEach((item, index ) => {if (item > 0) meatLastIndex = index});
-                let meatStr = "";
-                meatCountArr.forEach((item, index) => {
-                    if (item > 0) {
-                        if (index === meatLastIndex) {
-                            meatStr += `${item} ${sizeArr[index]}`;
-                        } else {
-                            meatStr += `${item} ${sizeArr[index]},`;
-                        }
-                    }
-                });
-
-                // log(meatStr);
+                 //log(pizzaOut.veg);
 
 
-                let vegCountArr = [0, 0, 0, 0, 0];
-                let vegArr = pizzaOut.veg;
-                // let meatArr = pizzaOut.meat.split(",");
-                sizeArr.forEach((item, index) => {
-                    vegArr.forEach(element => {
-                        if (element === item) vegCountArr[index]++; 
-                    });
-                });
-                // log(meatCountArr);
-
-                // let meatCountVarietyNum = meatCountArr.reduce((total, item) => {return (item > 0)? total++ : total + 0});
-                
-
-                let vegLastIndex = -1; 
-                vegCountArr.forEach((item, index ) => {if (item > 0) vegLastIndex = index});
-                let vegStr = "";
-                vegCountArr.forEach((item, index) => {
-                    if (item > 0) {
-                        if (index === vegLastIndex) {
-                            vegStr += `${item} ${sizeArr[index]}`;
-                        } else {
-                            vegStr += `${item} ${sizeArr[index]},`;
-                        }
-                    }
-                });
-                // log(pizzaOut.veg);
-                // let vegArr = pizzaOut.veg.split(",");
-                // let vegArr = pizzaOut.veg;
-                // log(vegArr);
-
-
-                //data.meat = pizzaOut.meat.toString();
-                data.meat = meatStr;
-                // data.veg = pizzaOut.veg.toString();
-                data.veg = vegStr;
+                data.meat = pizzaOut.meat.toString();
+                data.veg = pizzaOut.veg.toString();
 
                 // console.log(data);
             
@@ -209,14 +138,14 @@
 
                 // Create a variable that "renames" the comments array.
                 let cArray = commentsReceived.commentsArray;
-                // log(cArray);
+                log(cArray);
 
                 // Loop through each object inside of the comments array (cArray).
                 for (let i = 0; i < cArray.length; i++) {
                     // For each object, build a string that looks like an HTML li element.
                     //let commentString = "<li>" + cArray[i].message + " - " + cArray[i].firstName + "</li>";
-                    // log(cArray[i].meat, cArray[i].veg);
-                    let commentString = `<li>${cArray[i].total - cArray[i].vegetarians} : ${cArray[i].vegetarians} = Meat: ${cArray[i].meat} -- Veg: ${cArray[i].veg} </li>`;
+                    log(cArray[i].meat, cArray[i].veg);
+                    let commentString = `<li>${cArray[i].total - cArray[i].vegetarians} : ${cArray[i].vegetarians} = ${cArray[i].meat} meat: ${cArray[i].veg} veg </li>`;
 
                     // Add it to the HTML ul element that has the comments id.
                     $("#comments").append(commentString);
@@ -225,80 +154,70 @@
             });
         }
 
-    // Build a minimal pizza calculator program.
+            // Build a minimal pizza program.
     // Inputs:
     // Number of people, how many vegetarians
     // Outputs:
     // Number of pizzas with topping suggestions.
 
-    /* const log = console.log;
+    const log = console.log;
     // size of pizzas in sq inches [personal, small, medium, large, x-large]
     const pizzaArr = [38, 78, 113, 147, 201];
     pizzaArr.reverse();
-    */
 
     function pizza (pplNum, vegNum) {
         // the total amount of sq. in to satisfy the avg US pizza consumer
         let total = pplNum * 45.57;
         let vegTotal = vegNum * 45.57;
-        // log(`TOTAL IS ${total}`);
-        // log(`VEGTOTAL IS ${vegTotal}`);
-        let meatTotal = total - vegTotal;
-        // log(`MEATtOTAL IS ${meatTotal}`);
         let pizzaObj = { 
             "meat" : [],
             "veg" : []
         };
-        // log(`PIZZAOBJ IS`);
-        // log(pizzaObj);   
+            
         if (vegNum === 0 || vegNum === undefined) {
-            // log("NO VEG");
+            // pizzaNum = total - pizzaArr[i];
             let i = 0;
             while (total >= -10 || total >= 10) {
-                if ((total - pizzaArr[i] >= -10 || total - pizzaArr[i] >= 10) && !(vegTotal - pizzaArr[i] < -10)) {
+                if (total - pizzaArr[i] >= -10 || total - pizzaArr[i] >= 10) {
                 pizzaObj.meat.push(pizzaArr[i]);
                 total -= pizzaArr[i];
                 } else {
                     i++;
                 }
                 if (i >= pizzaArr.length) {
-                    // log(`TOTAL IS ${total}`);
                     break;
                 }
             }   
         } else {
-            // log("SOME VEG");
             let i = 0;
             while (vegTotal >= -10 || vegTotal >= 10) {
-                if ((vegTotal - pizzaArr[i] >= -10 || vegTotal - pizzaArr[i] >= 10) && !(vegTotal - pizzaArr[i] < -10)) {
+                if (vegTotal - pizzaArr[i] >= -10 || vegTotal - pizzaArr[i] >= 10) {
                 pizzaObj.veg.push(pizzaArr[i]);
                 vegTotal -= pizzaArr[i];
                 } else {
                     i++;
                 }
                 if (i >= pizzaArr.length) {
-                    // log(`VEGTOTAL IS ${vegTotal}`);
                     break;
                 }
             }    
 
-            
+            let meatTotal = total - vegTotal;
             i = 0;
             while (meatTotal >= -10 || meatTotal >= 10) {
-                if ((meatTotal - pizzaArr[i] >= -10 || meatTotal - pizzaArr[i] >= 10) && !(meatTotal - pizzaArr[i] < -10)) {
+                if (meatTotal - pizzaArr[i] >= -10 || meatTotal - pizzaArr[i] >= 10) {
                     pizzaObj.meat.push(pizzaArr[i]);            
                     meatTotal -= pizzaArr[i];
                 } else {
                     i++;
                 }
                 if (i >= pizzaArr.length) {
-                    // log(`MEATtOTAL END IS ${meatTotal}`);
                     break;
                 }
             }
         }
         return pizzaObj;       
-    }      
+    }
     </script>
 </body>
 </html>
