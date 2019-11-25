@@ -1,0 +1,133 @@
+<!-- REFER TO Users/student/Documents/"Git Repositories"/meda-winter2019-ryan/practice/express/requests/index.js -->
+<!-- REFER TO meda11819.txt-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Submit your comments</title>
+
+    <script   src="https://code.jquery.com/jquery-3.4.1.min.js"   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="   crossorigin="anonymous"></script>
+    <style> 
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="comments-section">
+        <h1>Comments Section</h1>
+        <ul id="comments">
+
+        </ul>
+    </div>
+
+    <div id="comment-submission"> </div>
+        <h1>Comment Submission Form</h1>
+        <h2>Instructions</h2>
+        <ol>
+            <li>Fill in the Form</li>
+            <li>Press the Submit Button</li>
+        </ol>
+
+        <form id="commentSubmission">
+        <!-- <form action = "#">  form action is a get request-->
+            <!-- form action= "http://localhost:3000/getSomeFile"-->
+            <label for="fname">First Name</label> <br>
+            <input name="fname" id="fname" type="text"> <br>
+
+            <label for="lname">Last Name</label> <br>
+            <input name="lname" id="lname" type="text"> <br>
+
+            <label for="email">Email</label> <!-- eBook --> <br>
+            <input name="email" id="email" type="email"> <br>
+
+            <label for="age">Age</label> <br>
+            <input name="age" id="age" type="number"> <br>
+
+            <label for="comment">Comments</label> <br>
+            <textarea cols="80" rows="20" id="comment" type="text">
+            </textarea> <br>
+            
+        </form>
+            <input form="commentSubmission" type="reset" value="Reset" />
+            <button id="submit">Submit</button> <!--Must be outside the form as a "dumb" version, so can use with jQuery-->
+    </div>
+
+    <script>
+
+        $(document).ready(() => {
+            
+            $.post("http://localhost:8080/loadComments", {}, (commentsReceived) => {                        
+                        //console.log(commentsReceived.commentsArray[1].comment);
+
+                        // TO DO:
+                        // load the comments at the start of the website loading
+                        $("#comments").empty();
+
+                        let cArray = commentsReceived.commentsArray;
+
+                        for (let i = 0; i < cArray.length; i++) {
+                            let commentString = "<li>" + cArray[i].comment + " - " + cArray[i].firstName + "</li>";
+                            $("#comments").append(commentString);
+                        }
+                        // $("#comments").append(commentString);
+                    });
+
+            $("#submit").click(() => {
+ 
+                // This listens to the submit button and the user clicks it to confirm 
+                // that they are done and the data is sent to the server
+
+                // TO DO : Add timestamp using:
+                // new Date.prototype.toLocaleDateString();
+
+
+                let data = {
+                    message : "Ohi",
+                    comment : $("#comment").val(),
+                    firstName : $("#fname").val(),
+                    lastName : $("#lname").val(),
+                    email : $("#email").val(),
+                    age : $("#age").val()
+                };
+
+                // Sends a POST request to the URL described
+                // takes three arguments: URL, data, callback func
+                $.post("http://localhost:8080/submitComment", data, () => {
+                    // console.log("The server has responded");
+                    console.log("The server has responded.");
+
+                    $.post("http://localhost:8080/loadComments", {}, (commentsReceived) => {                        
+                        //console.log(commentsReceived.commentsArray[1].comment);
+
+                        // TO DO:
+                        // load the comments at the start of the website loading
+                        $("#comments").empty();
+
+                        let cArray = commentsReceived.commentsArray;
+
+                        for (let i = 0; i < cArray.length; i++) {
+                            let commentString = "<li>" + cArray[i].comment + " - " + cArray[i].firstName + "</li>";
+                            $("#comments").append(commentString);
+                        }
+                        // $("#comments").append(commentString);
+                    });
+                });
+            });
+
+
+        });
+    </script>
+</body>
+</html>
