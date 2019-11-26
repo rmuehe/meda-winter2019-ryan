@@ -1,5 +1,10 @@
 // Include into our code, the FS package (builtin)
-const fs = require("fs");
+
+// FS COMMENTED OUT
+// const fs = require("fs");
+
+// Includes into our code the Mongoose.js package.
+const mongoose = require("mongoose");
 // Includes into our code, the Express.js, provided by NPM.
 const express = require("express");
 // Includes into our code Body Parser, comes with Express.js
@@ -13,6 +18,46 @@ const port = 3000;
 // We pass the port variable to the listen function for the HTTP server.
 http.listen(port);
 
+// URL to access our MongoDB database.
+const dbConnect = "mongodb+srv://commentsProjectUser:BaloneyIsReal@cluster0-4gzsy.mongodb.net/commentsproject?retryWrites=true&w=majority"
+// Additional options when connecting with MongoDB.
+const options = {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true  //bug with this where can't log in with multiple users on the same IP
+};
+
+mongoose.connect(dbConnect, options, (error) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Successfully connected to MongoDB Atlas");
+    }
+});
+
+// link up MongoDB error with the console 
+// and link up the definitions of Promises to Mongoose.
+let db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB error: "));
+// Tell mongoose what a Promise is by providing the class to it.
+mongoose.Promise = global.Promise;
+
+// Building Mongoose Schema
+let Schema = mongoose.Schema;
+let commentsSchema = new Schema ({
+    message: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    age: Number,
+    timestamp: Date
+});
+
+
+// allows save, find, findById, findByIdAndDelete
+// Create a Model for the comments collection using the comments Schema.
+let commentsModel = new mongoose.model("comments", commentsSchema);
+
 // Signifying the Developer that Express.js is now running.
 console.log("Express server running on port " + port);
 
@@ -24,7 +69,8 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Custom Code for Express.js after this line.
 
 // Variable to make sure the file name is the same every time.
-let filename = "commentHistory.json";
+// FS COMMENTED OUT
+// let filename = "commentHistory.json";
 
 // Routes
 // First Argument is the route name, second argument is directory to load when someone requests the route name.
@@ -40,10 +86,26 @@ app.post("/submitComment", (request, response) => {
     
     console.log(objectFromRequest);
 
+    // TODO: handle the NaN case where user doesnt input a number
+    objectFromRequest.age = parseInt(objectFromRequest.age);
+    objectFromRequest.timestamp = new Date();
+
+    let newComment = new commentsModel(objectFromRequest);
+    newComment.save((error) => {
+            // need to handle for the error
+            if (error) {
+                console.log("There was an error " + error);
+            } else {
+                console.log("Saved a new comment to the database");
+            }
+    });
+});
     // let text = objectFromRequest.message;
     // console.log("We recieved a request for/submitComment: " + text);
 
 
+// FS COMMENTED OUT
+/*
     // If the file exists do...
     if (fs.existsSync(filename)) {
         // ...read the file and store the contents in the variable comments...
@@ -72,14 +134,30 @@ app.post("/submitComment", (request, response) => {
 
     // {commentsArray: []}
 
-
     // If you don't want to send any data back, you can use .sendStatus(). You can only use sendStatus or send once to "fulfill" front-end request.
     response.sendStatus(200);
 });
+*/
+
 
 // A second HTTP Post Handler called /loadComments
 app.post("/loadComments", (request, response) => {
 
+    commentsModel.find({}, (error, results) => {
+        if (error) {
+            // If error, tell me about it.
+            console.log(error);
+        } else {
+            // Build an object that the front-end expects...
+            let objectToSend = {
+                commentsArray: results
+            };
+            response.send(objectToSend);
+        }
+    });
+});
+// FS COMMENTED OUT
+/*
     // Check if the JSON file exists...
     if (fs.existsSync(filename)) {
         
@@ -94,4 +172,4 @@ app.post("/loadComments", (request, response) => {
         response.sendStatus(500);
     }
 
-});
+*/
