@@ -54,7 +54,8 @@ let practiceSchema = new Schema({
     // what are the documents going to hold?
     note: String,
     old: Boolean,
-    timesUpdated: Number
+    timesUpdated: Number,
+    city: String
     // consider these like columns with these values
 });
 
@@ -115,3 +116,28 @@ practiceModel.find(searchCriteria, (error, results) => {
         console.log(results);
     }
 });
+
+let dataToUpdate = {
+    old: true,
+    city: "San Francisco"
+};
+
+// UPDATE
+// practiceModel.findByIdAndUpdate("5ddc2adb5c43d3ab1e9fdba6", dataToUpdate, (error, results) => {
+//     if (error) {
+//         console.log("Something bad happened");
+//     } else {
+//         console.log(results);
+//     }
+// });
+
+// DELETE
+practiceModel.findByIdAndDelete("5ddc2adb5c43d3ab1e9fdba6", (error, results) => {
+    if (error) {
+        console.log("Something worse happened");
+    } else {
+        console.log(results);
+    }
+});
+
+// https://cloud.mongodb.com/v2/5dd6f4d279358e94ad2b08ef#metrics/replicaSet/5dd6f92dff7a258d88cf5b31/explorer/test/myfirstcollections/find
