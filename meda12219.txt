@@ -1,0 +1,192 @@
+MEDA 12/2/19
+
+Visitor (12-1pm?) on Tues and Fri
+
+SKETCH $99 / year UI/UX development
+figma.com
+
+** HW: medatech@medasf.org
+subject: fcc_js
+content: link to fcc profile
+
+https://sendpulse.com/blog/best-email-template-builders
+
+
+TODAY
+Beginning to Build an app from scratch
+HTML Generator
+- only buttons required for input
+
+MERN: MongoDB, Express, React, Node
+- stack does everything: MVC
+database, actions/events (controller), interface (view)
+-- lot of forms
+-- lot of buttons
+-- lot of POST handles
+- messy in the front-end: using jQuery
+
+backend
+- using a login, 
+(not secure, otherwise need cookies, sessions, hash [which ed doesn't have exp. with in JS])
+- 
+
+can't reuse what we use on the backend with React...
+- React is a "dialect" for JavaScript
+
+"scope creep" : every iteration needs "more"
+- never done with the project...
+- avoiding: take notes about future features.
+-- finish what you started now for the time being.
+
+Defining HTML Generator
+
+- Forms
+- H1, H2
+
+- build HTML page
+[[maybe translate markdown to html]]
+-- filename
+-- download HTML file
+-- allow titles, headers, text, images+ 
+-- (uploading, passing files to server requires some practice)
+- Save feature: save project, 
+- load project with user login
+OPTIONAL
+- live preview window (if there's time)+
+- tables ++
+- pre-built gallery themes (later)
+- add color/style
+
+- Drag and Drop, or auto-generation: 
+- may be too advanced SquareSpace, Wix, Weebly
+
+Visualizing the HTML Generator
+- let's say there's three pages
+
+VIEW
+1st page: 
+
+Login
+UserName, Password fields
+Submit button
+Reset button
+
+-----------
+Register
+email
+username
+password
+Submit button
+Reset button (for convenience and accessibility)
+
+//////////////////
+
+2nd page:
+
+Build Webpage
+- avoiding checkboxes, radio buttons (harder to code)
+- maybe: table of contents, toolbar (icons like on MSPAINT)
+
+jQuery UI, jQuery plugin -- good for drag/drop functionality
+jqueryui.com/draggable
+
+NAV BAR
+ToolBar in a column
+-customize text
+-download, save buttons
+Structure
+- header
+- ptag
+- link	````````````````````````````````````````````````1
+
+
+//////////////////
+
+3rd Page
+profile/control panel
+- append, delete files, change user information, logout button
+- list of projects
+- account settings (date joined)
+-- Need Canvas to make thumbnails....
+
+
+- create a gmail account, npm package for sending emails....
+input-screen  Shachi Nautiyal indiefolio.com
+
+
+CONTROL
+- hardest part of MVC (?)
+
+MODEL
+- Database
+
+What data:
+-- Projects
+--- Images
+
+-- Credentials
+--- Account information
+
+
+Save images in database
+- used to happen more years before
+Alternatively: save a filepath in the database
+- downside: file not found when path changes
+
+https://stackoverflow.com/questions/3748/storing-images-in-db-yea-or-nay
+
+
+Controller -> View -> Model
+
+MODEL
+What is a schema?
+- A layout of how the data is stored
+- structure of the documents
+
+Project Schema			Account Schema
+- filename				- fname		strings
+- array of elements		- lname		  |
+-- (html objects)			- username		  |
+- owner's username			- email		  v
+-- (insecure, but ok for now)	- password
+
+Model in Mongoose: How you contact (connect with?) MongoDB server
+
+CONTROLLER
+- controls the data
+- conditions, functions, ... control the flow of the program
+- List of Actions
+-- sequence of methods, variables, Loops
+
+ACTIONS
+1st Page login/register
+- Sign In
+- Register
+
+2nd Page build webpage
+- Save
+- Download
+-- Generates into a HTML file from Data (JSON perhaps) 
+- Create HTML code
+
+3rd Page profile/control panel
+- Logout
+- update password
+- CRUD for projects
+
+(Will look into sessions, but not cookies here)
+
+"nvm" recommended for mac users : manage a node install
+
+Terminal CMDS for building HTMLGenerator node project
+npm install
+npm install -S express
+npm install -S mongoose
+
+folders: 
+assets: CSS, JS, images, txt files
+- builder-images, user-avatars
+client
+- images, styles, script folder; index, builder, profile.html files
+
+

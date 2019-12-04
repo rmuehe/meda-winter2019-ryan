@@ -110,19 +110,21 @@ practiceModel.find(searchCriteria, (error, results) => {
     // If error, then...
     if (error) {
         // ... Tell us about it.
-        console.log("Something went wrong");
+        console.log("Something went wrong: " + error);
     } else {
         // Otherwise console log the entries found.
         console.log(results);
     }
 });
-
+// Data to update the targeted entry with the right ID
 let dataToUpdate = {
     old: true,
     city: "San Francisco"
 };
 
 // UPDATE
+
+// Submit the request to MongoDB with the proper id and data to update.
 // practiceModel.findByIdAndUpdate("5ddc2adb5c43d3ab1e9fdba6", dataToUpdate, (error, results) => {
 //     if (error) {
 //         console.log("Something bad happened");
@@ -132,6 +134,7 @@ let dataToUpdate = {
 // });
 
 // DELETE
+// First argument is the ID of the entry to delete, 2nd arg is the callb func that runs when MongoDB responds with success or failure.
 practiceModel.findByIdAndDelete("5ddc2adb5c43d3ab1e9fdba6", (error, results) => {
     if (error) {
         console.log("Something worse happened");
